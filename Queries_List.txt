@@ -1,0 +1,72 @@
+# Josh Kreps
+# SQL Queries
+
+
+# Query 1
+# Find the list of users.
+
+USE ums;
+SELECT *
+FROM ums.users
+
+
+
+# Query 2
+# Find the list of content producers.
+
+USE ums;
+SELECT id, name
+FROM users
+INNER JOIN user_roles ON users.id = user_roles.user_id
+AND user_roles.role_id = 1;
+
+
+
+# Query 3
+# Find the list of content subscribers.
+
+USE ums;
+SELECT id, name
+FROM users
+INNER JOIN user_roles ON users.id = user_roles.user_id
+AND user_roles.role_id = 2;
+
+
+
+# Query 4
+# Find the list of content subscribers who are subscribed on a particular producer.
+
+USE messaging;
+SELECT subscriber_id
+FROM subscription
+WHERE producer_id = 1;
+
+
+
+# Query 5
+# Find all messages
+
+USE messaging;
+SELECT *
+FROM message
+
+
+
+# Query 6
+# Find all messages created by a particular producer.
+
+USE messaging;
+SELECT producers.first_name, producers.last_name, message.content, message.timestamp
+FROM message
+INNER JOIN producers ON message.producer_id AND producers.producer_id = 1;
+
+
+
+# Query 7
+# Find all the messages for a particular subscriber.
+
+USE messaging;
+SELECT message.producer_id, message.content, message.timestamp
+FROM message
+INNER JOIN subscription ON subscription.subscriber_id = 3
+WHERE message.producer_id = subscription.producer_id;
